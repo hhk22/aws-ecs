@@ -6,6 +6,7 @@ import * as redis from "redis"
 const { PORT, REDIS_URL } = process.env
 
 const startServer = async () => {
+    console.log('start up the server')
     const client = redis.createClient({url: REDIS_URL});
     await client.connect();
 
