@@ -1,0 +1,1 @@
+redis-server --daemonize yes --port 6380 --requirepass test_env
