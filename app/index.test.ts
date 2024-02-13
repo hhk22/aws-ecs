@@ -6,10 +6,10 @@ import * as redis from "redis"
 let app: App;
 let client: RedisClient
 
-const REDIS_URL = "redis://:test_env@localhost:6380";
+// const REDIS_URL = "redis://:test_env@localhost:6380";
 
 beforeAll(async () => {
-    client = redis.createClient({url: REDIS_URL})
+    client = redis.createClient({url: process.env.TEST_REDIS_URL})
     await client.connect();
     app = createAppClient(client);
 })
