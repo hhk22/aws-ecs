@@ -41,11 +41,22 @@ const app_1 = require("./app");
 const redis = __importStar(require("redis"));
 const { PORT, REDIS_URL } = process.env;
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('start up the server');
     const client = redis.createClient({ url: REDIS_URL });
     yield client.connect();
     const app = (0, app_1.createAppClient)(client);
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
         console.log(`App listening at port ${PORT}`);
     });
+    return server;
 });
-startServer();
+const server = startServer();
+const gracefulShutdown = () => __awaiter(void 0, void 0, void 0, function* () {
+    const _server = yield server;
+    _server.close(() => {
+        console.log("graceful shutdown");
+        process.exit();
+    });
+});
+process.on("SIGTERM", gracefulShutdown);
+process.on("SIGINT", gracefulShutdown);

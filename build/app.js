@@ -19,7 +19,17 @@ const createAppClient = (client) => {
     const app = (0, express_1.default)();
     app.use(express_1.default.json());
     app.get("/", (req, res) => {
-        res.status(200).send("hello world");
+        res.status(200).send("hello world new version");
+    });
+    function fibonacci(n) {
+        if (n <= 1)
+            return n;
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+    app.get("/fibonacci/:n", (req, res) => {
+        const n = parseInt(req.params.n, 10);
+        const result = fibonacci(n);
+        res.send(`Fibonacci ${n} = ${result}`);
     });
     app.post("/messages", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { message } = req.body;
